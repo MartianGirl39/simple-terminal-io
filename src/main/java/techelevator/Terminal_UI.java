@@ -96,6 +96,7 @@ public class Terminal_UI {
                             return response;
                         }
                         response.Response();
+                        break;
                     }
                     System.out.println(Terminal_UI.RED + "INVALID INPUT" + Terminal_UI.RESET);
                 }
