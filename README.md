@@ -89,7 +89,13 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - This framework leverages ANSI escape codes for color formatting.
 - Inspired by various terminal UI libraries in different programming languages.
 
+  ## Ai Review Link:
+- Here is a link to an AI review of this code base by chatGPT. Feel free to look over the area of improvements specified by chatGPT for contribution inspo. https://docs.google.com/document/d/1j58Evbu4bQrcOKz0JNLBPF_IkA-c7vludItv_4C6CDc/edit?usp=sharing
+
 ```
 
 ### Note:
 This README is a template and may require adjustments based on your specific implementation details and additional functionalities present in your project. Make sure to provide real paths, method signatures, and functional examples according to your actual code and its usage.
+
+## Ai Review Link:
+Here is a link to an AI review of this code base by chatGPT. Feel free to look over the area of improvements specified by chatGPT for contribution inspo. https://docs.google.com/document/d/1j58Evbu4bQrcOKz0JNLBPF_IkA-c7vludItv_4C6CDc/edit?usp=sharing
