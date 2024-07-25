@@ -24,18 +24,6 @@ The Terminal UI Framework is a Java-based library designed to create a terminal 
 - Java Development Kit (JDK) 8 or higher
 - Basic understanding of Java programming and console applications
 
-### Installation
-
-1. Clone this repository or download the source code.
-2. Compile the code using `javac`:
-   ```bash
-   javac TerminalUI.java
-   ```
-3. Run the application:
-   ```bash
-   java TerminalUI
-   ```
-
 ### Usage
 
 - **Creating a Terminal UI:**
