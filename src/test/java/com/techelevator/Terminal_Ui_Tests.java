@@ -1,6 +1,7 @@
 package com.techelevator;
 
 import org.junit.Test;
+import techelevator.Response;
 import techelevator.Terminal_UI;
 
 import static org.junit.Assert.assertEquals;
@@ -55,10 +56,5 @@ public class Terminal_Ui_Tests {
                 assertEquals(state[i][j], ui.getState(names[i][j]));
             }
         }
-    }
-
-    @Test
-    public void testPromptWithTermination(){
-        
     }
 }
