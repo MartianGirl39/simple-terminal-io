@@ -36,7 +36,7 @@ The Terminal UI Framework is a Java-based library designed to create a terminal 
   Utilize `appendToDisplay(String item)` to add new lines to the display. Use `appendPromptToDisplay(String prompt, InputHandler f, boolean terminateRender)` for adding prompts with input handlers.
 
 - **Rendering the Display:**
-  Call the `renderDisplay()` method to clear the terminal screen and present the current state of the display.
+  Call the `renderToDisplay()` method to clear the terminal screen and present the current state of the display.
 
 ## Example
 
@@ -56,11 +56,11 @@ public class MyApp {
         ui.appendPromptToDisplay("Enter your name: ", input -> {
             ui.addState("username", input);  // Update username
             ui.adjustDisplay("username");    // Update display
-            ui.renderDisplay();
+            ui.renderToDisplay();
         }, true);
 
         // Render the initial display
-        ui.renderDisplay();
+        ui.renderToDisplay();
     }
 }
 ```
@@ -72,7 +72,7 @@ public class MyApp {
 | `clearScreen()` | Clears the terminal screen. |
 | `appendToDisplay(String item)` | Adds a new item to the display. |
 | `appendPromptToDisplay(String prompt, InputHandler f, boolean terminateRender)` | Adds a prompt with an associated input handler. |
-| `renderDisplay()` | Renders the current contents of the display to the terminal. |
+| `renderToDisplay()` | Renders the current contents of the display to the terminal. |
 | `addState(String identifier, Object object)` | Updates or adds a state entry. |
 | `getState(String identifier)` | Retrieves the value of a specified state. |
 

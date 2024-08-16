@@ -1,8 +1,11 @@
-package techelevator;
+package example.display;
 
+import example.TerminalDisplayObject;
+
+import java.io.IOException;
 import java.util.*;
 
-public class Terminal_UI {
+public class DisplayBlock implements TerminalDisplayObject {
 
     // public static values to simplify text formatting
     //
@@ -49,8 +52,6 @@ public class Terminal_UI {
     // This is used to store state that can change throughout the program wihtout having to reform the view of the skeleton
     private Map<String, String> state = new HashMap<>();
 
-    // This is data used for prompts, the string is the prompt message so we can fetch it from display to override functionality, the function is a lambda callback that allows the programmer to define checks and side effect for after the input is taken, which is taken by the function as a string. if the function returns false we stop rendering if true we continue
-    private Map<String, InputResponse> prompts = new HashMap<>();
 
     //private PrintStream outputStream = new PrintStream(System.out);
 
@@ -59,53 +60,33 @@ public class Terminal_UI {
         try {
             // grabs the os we're using if os has not been initialized
             if (os == null) {
+                // this should grab os name
                 os = System.getProperty("os.name");
             }
 
             // checks the operating system of the system we're running on
             if (os.contains("Window") || os.contains("window")) {
                 Runtime.getRuntime().exec("cls");
-            } else {
+            }
+            else {
                 Runtime.getRuntime().exec("clear");
             }
-        } catch (final Exception e) {
-            //  Handle any exceptions.
+        } catch (IOException e) {
+            System.out.println("");
+            System.out.println(BAR + RED);
+            System.out.println("FAILED TO CLEAR SCREEN");
+            System.out.println(RESET + BAR);
+            System.out.println("");
         }
     }
 
-    public Response renderDisplay() {
+    public void renderToDisplay() {
         Scanner input = new Scanner(System.in);
         clearScreen();
         // start by clearing screen for a fresh start
-        for(String line: display){
-            // check for a prompt
-            if(line.indexOf("!!PROMPT!!") == 0) {
-                line = line.replace("!!PROMPT!!", "");
-                while(true) {
-                    System.out.print(line);
-                    InputHandler f = prompts.get(line).getOnEnter();
-                    if (f == null) {
-                        throw new Error();
-                    }
-                    Response response = f.handleInput(input.nextLine().strip());
-                    if(response != null) {
-                        if (prompts.get(line).isRedirectOnValid()) {
-                            clearScreen();
-                            System.out.println("finished rendering");
-                            input.close();
-                            return response;
-                        }
-                        response.Response();
-                    }
-                    System.out.println(Terminal_UI.RED + "INVALID INPUT" + Terminal_UI.RESET);
-                }
-            }
-            else {
-                System.out.println(line);
-            }
+        for(String line: display) {
+            System.out.println(line);
         }
-        input.close();
-        return null;
     }
 
     public void appendToLastLineInDisplay(String item) {
@@ -128,42 +109,49 @@ public class Terminal_UI {
         display.add(item);
     }
 
-    public void appendPromptToDisplay(String prompt, InputHandler f, boolean terminateRender){
-        List<StateEntry> state = findStateLocation(prompt);
-        for (StateEntry entry : state) {
-            this.state.put(entry.getKey(), "");
-        }
-        this.prompts.put(prompt, new InputResponse(f, terminateRender));
-        this.skeleton.add("!!PROMPT!!" + prompt);
-        this.display.add("!!PROMPT!!" + prompt);
-    }
-
     public void clearDisplay() {
         skeleton.clear();
         this.clearScreen();
     }
 
     public boolean addState(String identifier, Object object) {
-        if(state.containsKey(identifier)) {
+        try {
             this.state.put(identifier, object.toString());
+            // System.out.println(this.state.get(identifier));
             // we need to find where this key is used, change the skeleton accordingly, then rerender
             adjustDisplay(identifier);
             return true;
         }
-        return false;
-    }
-
-    public void removeState(String identifier) {
-        this.state.remove(identifier);
-    }
-
-    public void removeState(String... identifiers) {
-        for (String indetifier : identifiers) {
-            this.state.remove(indetifier);
+        catch(Exception e){
+            return false;
         }
     }
 
-    public String getState(String identifier) {
+    public boolean removeState(String identifier) {
+        try {
+            this.state.remove(identifier);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+
+    public boolean removeState(String... identifiers) {
+        try {
+            Map<String, String> state = this.state;
+            for (String identifier : identifiers) {
+                state.remove(identifier);
+            }
+            this.state = state;
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+
+    public String getState(String identifier) {;
         return this.state.get(identifier);
     }
 
@@ -265,5 +253,4 @@ public class Terminal_UI {
     public List<String> getDisplay() {
         return display;
     }
-
 }
